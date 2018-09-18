@@ -1,6 +1,5 @@
 package com.springproject.vmagri.resources;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +21,10 @@ public class CategoriaResource {
 
 //	@RequestMapping(method = RequestMethod.GET)
 	@GetMapping
-	public List<Categoria> list() {
+	public ResponseEntity<?> list() {
 
-		Categoria cat1 = new Categoria(1, "Informatica");
-		Categoria cat2 = new Categoria(2, "Escritorio");
-		List<Categoria> listCategoria = new ArrayList<Categoria>();
-		listCategoria.add(cat1);
-		listCategoria.add(cat2);
-
-		return listCategoria;
+		List<Categoria> listCategoria = service.find();
+		return ResponseEntity.ok(listCategoria);
 	}
 
 	@GetMapping(value = "/{id}")
