@@ -86,12 +86,17 @@ public class SpringprojectApplication implements CommandLineRunner {
 		Cliente cli1 = new Cliente(null, "Maria da Silva", "maria.silva@gmail.com", "23456734598", TipoCliente.PESSOAFISICA);
 		cli1.getTelefones().addAll(Arrays.asList("44563212", "987654434"));
 		
+		Cliente cli2 = new Cliente(null, "Amanda Castelli", "castellia@gmail.com", "22344567891", TipoCliente.PESSOAFISICA);
+		cli2.getTelefones().addAll(Arrays.asList("76543323", "987675545"));
+		
 		Endereco e1 = new Endereco(null, "Rua Flores", "1456", "Apto 203", "Jardim", "38220084", c1, cli1);
-		Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 80", "Centro", "387772012", c2, cli1);
+		Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 80", "Centro", "387772012", c2, cli1);		
+		Endereco e3 = new Endereco(null, "Rua ABC", "554", "apto 88", "Vila Luisa", "09877151", c2, cli2);		
 		
 		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+		cli2.getEnderecos().addAll(Arrays.asList(e3));
 		
-		clienteRepo.saveAll(Arrays.asList(cli1));
-		enderecoRepo.saveAll(Arrays.asList(e1, e2));
+		clienteRepo.saveAll(Arrays.asList(cli1, cli2));
+		enderecoRepo.saveAll(Arrays.asList(e1, e2, e3));
 	}
 }
