@@ -1,6 +1,9 @@
 package com.springproject.vmagri;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -12,13 +15,20 @@ import com.springproject.vmagri.domain.Cidade;
 import com.springproject.vmagri.domain.Cliente;
 import com.springproject.vmagri.domain.Endereco;
 import com.springproject.vmagri.domain.Estado;
+import com.springproject.vmagri.domain.Pagamento;
+import com.springproject.vmagri.domain.PagamentoBoleto;
+import com.springproject.vmagri.domain.PagamentoCartao;
+import com.springproject.vmagri.domain.Pedido;
 import com.springproject.vmagri.domain.Produto;
+import com.springproject.vmagri.domain.enums.StatusPagamento;
 import com.springproject.vmagri.domain.enums.TipoCliente;
 import com.springproject.vmagri.repositories.CategoriaRepository;
 import com.springproject.vmagri.repositories.CidadeRepository;
 import com.springproject.vmagri.repositories.ClienteRepository;
 import com.springproject.vmagri.repositories.EnderecoRepository;
 import com.springproject.vmagri.repositories.EstadoRepository;
+import com.springproject.vmagri.repositories.PagamentoRepository;
+import com.springproject.vmagri.repositories.PedidoRepository;
 import com.springproject.vmagri.repositories.ProdutoRepository;
 
 
@@ -42,6 +52,12 @@ public class SpringprojectApplication implements CommandLineRunner {
 	
 	@Autowired
 	private EnderecoRepository enderecoRepo;
+	
+	@Autowired
+	private PedidoRepository pedidoRepo;
+	
+	@Autowired
+	private PagamentoRepository pagamentoRepo;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringprojectApplication.class, args);
@@ -98,5 +114,22 @@ public class SpringprojectApplication implements CommandLineRunner {
 		
 		clienteRepo.saveAll(Arrays.asList(cli1, cli2));
 		enderecoRepo.saveAll(Arrays.asList(e1, e2, e3));
+		
+		
+		DateFormat datePattern = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		
+		Pedido ped1 = new Pedido(null, datePattern.parse("30/09/2017 10:32"), cli1, e1);
+		Pedido ped2 = new Pedido(null, datePattern.parse(datePattern.format(new Date())), cli1, e2);
+		
+		Pagamento pag1 = new PagamentoCartao(null, StatusPagamento.EFETUADO, ped1, 6, datePattern.parse(datePattern.format(new Date())));
+		ped1.setPagamento(pag1);
+		
+		Pagamento pag2 = new PagamentoBoleto(null, StatusPagamento.PENDENTE, ped2, datePattern.parse("20/10/2017 00:00"), null);
+		ped2.setPagamento(pag2);
+		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+		
+		pedidoRepo.saveAll(Arrays.asList(ped1, ped2));
+		pagamentoRepo.saveAll(Arrays.asList(pag1, pag2));
+
 	}
 }

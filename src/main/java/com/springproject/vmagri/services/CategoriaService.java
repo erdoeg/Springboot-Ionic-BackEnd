@@ -12,16 +12,16 @@ import com.springproject.vmagri.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoriaService {
-	
+
 	@Autowired
 	private CategoriaRepository repo;
-	
+
 	public Categoria find(Integer id) {
 		Optional<Categoria> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Object not found! Id: " + id + ", Type: " + Categoria.class.getName()));
 	}
-	
+
 	public List<Categoria> find() {
 		List<Categoria> obj = repo.findAll();
 		return obj;
