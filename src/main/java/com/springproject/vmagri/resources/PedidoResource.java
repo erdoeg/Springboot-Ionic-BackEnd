@@ -13,7 +13,7 @@ import com.springproject.vmagri.domain.Pedido;
 import com.springproject.vmagri.services.PedidoService;
 
 @RestController
-@RequestMapping(value = "/Pedidos")
+@RequestMapping(value = "/pedidos")
 public class PedidoResource {
 
 	@Autowired

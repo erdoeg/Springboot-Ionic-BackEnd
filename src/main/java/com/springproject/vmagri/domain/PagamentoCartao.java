@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.springproject.vmagri.domain.enums.StatusPagamento;
 
 @Entity
@@ -11,6 +12,8 @@ public class PagamentoCartao extends Pagamento {
 	private static final long serialVersionUID = 1L;
 
 	private Integer numeroParcelas;
+	
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm:ss")
 	private Date dataPagamento;
 
 	public PagamentoCartao() {
