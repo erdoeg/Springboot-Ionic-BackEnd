@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.springproject.vmagri.domain.Categoria;
 import com.springproject.vmagri.repositories.CategoriaRepository;
+import com.springproject.vmagri.services.exceptions.DataIntegrityException;
 import com.springproject.vmagri.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -35,5 +37,15 @@ public class CategoriaService {
 	public Categoria update(Categoria obj) {
 		find(obj.getId());
 		return repo.save(obj);
+	}
+	
+	public void delete(Integer id) {
+		find(id);
+		try {
+			repo.deleteById(id);
+			
+		} catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("A Categoria nao pode ser deletada. Pode haver produtos vinculados a ela.", e);
+		}
 	}
 }
