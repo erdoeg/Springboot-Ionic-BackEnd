@@ -2,6 +2,7 @@ package com.springproject.vmagri.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.springproject.vmagri.domain.Categoria;
+import com.springproject.vmagri.dto.CategoriaDTO;
 import com.springproject.vmagri.services.CategoriaService;
 
 @RestController
@@ -27,10 +29,10 @@ public class CategoriaResource {
 
 //	@RequestMapping(method = RequestMethod.GET)
 	@GetMapping
-	public ResponseEntity<?> list() {
-
+	public ResponseEntity<List<CategoriaDTO>> list() {
 		List<Categoria> listCategoria = service.find();
-		return ResponseEntity.ok(listCategoria);
+		List<CategoriaDTO> listDto = listCategoria.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok(listDto);
 	}
 
 	@GetMapping(value = "/{id}")
