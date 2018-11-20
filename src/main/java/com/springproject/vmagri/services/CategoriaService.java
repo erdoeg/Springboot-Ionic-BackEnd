@@ -49,7 +49,7 @@ public class CategoriaService {
 			repo.deleteById(id);
 			
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("A Categoria nao pode ser deletada. Pode haver produtos vinculados a ela.", e);
+			throw new DataIntegrityException("A Categoria nao pode ser excluída. Pode haver produtos relacionados.", e);
 		}
 	}
 	
