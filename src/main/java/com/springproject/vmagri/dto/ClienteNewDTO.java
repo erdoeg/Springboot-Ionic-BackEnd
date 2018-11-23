@@ -2,21 +2,45 @@ package com.springproject.vmagri.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.springproject.vmagri.services.validation.ClienteInsert;
+
+@ClienteInsert
 public class ClienteNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@NotEmpty(message="Name is required.")
+	@Length(min=5, max=120, message="Input 5 to 120 characters")
 	private String name;
+	
+	@NotEmpty(message="Email is required.")
+	@Email(message="Invalid Email.")
 	private String email;
+	
+	@NotEmpty(message="CPF/CNPJ is required.")
 	private String cpfOrCnpj;
+	
 	private Integer tipoCliente;
 	
+	@NotEmpty(message="Logradouro is required.")
 	private String logradouro;
+	
+	@NotEmpty(message="Address Number is required.")
 	private String numero;
+	
 	private String complemento;
 	private String bairro;
+	
+	@NotEmpty(message="CEP is required.")
 	private String cep;
 	
+	@NotEmpty(message="Telefone is required.")
 	private String Tel1;
+	
 	private String Tel2;
 	private String Tel3;
 	

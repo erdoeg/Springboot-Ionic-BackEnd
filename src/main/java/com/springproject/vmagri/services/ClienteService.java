@@ -29,7 +29,7 @@ public class ClienteService {
 
 	@Autowired
 	private ClienteRepository repo;
-	
+
 	@Autowired
 	private EnderecoRepository endRepo;
 
@@ -76,15 +76,18 @@ public class ClienteService {
 	public Cliente fromDTO(ClienteDTO objDTO) {
 		return new Cliente(objDTO.getId(), objDTO.getName(), objDTO.getEmail(), null, null);
 	}
-	
+
 	public Cliente fromDTO(ClienteNewDTO objDTO) {
-		Cliente cli = new Cliente(null, objDTO.getName(), objDTO.getEmail(), objDTO.getCpfOrCnpj(), TipoCliente.getEnum(objDTO.getTipoCliente()));
+		Cliente cli = new Cliente(null, objDTO.getName(), objDTO.getEmail(), objDTO.getCpfOrCnpj(),
+				TipoCliente.getEnum(objDTO.getTipoCliente()));
 		Cidade cid = new Cidade(objDTO.getCidadeId(), null, null);
-		Endereco end = new Endereco(null, objDTO.getLogradouro(), objDTO.getNumero(), objDTO.getComplemento(), objDTO.getBairro(), objDTO.getCep(), cid, cli);
-		
+		Endereco end = new Endereco(null, objDTO.getLogradouro(), objDTO.getNumero(), objDTO.getComplemento(),
+				objDTO.getBairro(), objDTO.getCep(), cid, cli);
+
 		cli.getEnderecos().add(end);
-		Arrays.asList(objDTO.getTel1(), objDTO.getTel2(), objDTO.getTel3()).stream().filter(Objects::nonNull).forEach(cli.getTelefones()::add);
-		
+		Arrays.asList(objDTO.getTel1(), objDTO.getTel2(), objDTO.getTel3()).stream().filter(Objects::nonNull)
+				.forEach(cli.getTelefones()::add);
+
 		return cli;
 	}
 
